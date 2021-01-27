@@ -29,20 +29,6 @@ function fetchAllGames(){
             imgDiv.append(img);
             mainDiv.append(imgDiv);
         })
-        let formDiv = document.createElement('div');
-        formDiv.className = 'form-div';
-        formDiv.innerHTML = `
-        <form id="create-new-game">
-            <label for="name">Name: </label>
-            <input type="text" name="name" id="new-game-name" placeholder="Enter New Game Name">
-            <label for="genre">Genre: </label>
-            <input type="text" name="genre" id="new-game-genre" placeholder="Enter New Game Genre">
-            <label for="image">Image: </label>
-            <input type="text" name="image" id="new-game-image" placeholder="Enter New Game Image URL">
-            <input type="submit" value="Create New Game!">
-        </form>
-        `;
-        mainDiv.append(formDiv);
     })
 }
 function navUlEvent(){
@@ -230,6 +216,21 @@ function loginEvent(){
             username: loginUsername
         }
         fetchLoggedInUser(loginObj);
+        let formDiv = document.createElement('div');
+        formDiv.className = 'form-div';
+        formDiv.innerHTML = `
+        <form id="create-new-game">
+            <h1>Don't See Your Game? Add it! </h1>
+            <label for="name">Name: </label>
+            <input type="text" name="name" id="new-game-name" placeholder="Enter New Game Name">
+            <label for="genre">Genre: </label>
+            <input type="text" name="genre" id="new-game-genre" placeholder="Enter New Game Genre">
+            <label for="image">Image: </label>
+            <input type="text" name="image" id="new-game-image" placeholder="Enter New Game Image URL">
+            <input type="submit" value="Create New Game!">
+        </form>
+       `;
+        mainDiv.append(formDiv);
         mainDivEvent();
     })
 }
@@ -274,8 +275,18 @@ function fetchLoggedInUser(loginObj){
             currentUserGameList.forEach(game => {
                 let li = document.createElement('li');
                 li.textContent = game.name;
-                userGameList.append(li)
-            })
+                li.dataset.id = game.id;
+                let delBtn = document.createElement('button')
+                delBtn.textContent = "Delete";
+                li.append(delBtn);
+                userGameList.append(li);
+                delBtn.addEventListener('click', function(e){
+                    let liElem = e.target.parentElement;
+                    console.log(liElem)
+                    //deleting a usergame 
+                })
+            }
+            )
         } else {
             alert("Your email/username has not been found!");
         }
@@ -289,11 +300,14 @@ function mainDivEvent(){
             .then(res => res.json())
             .then(game => {
                 currentGame = game;
+                let reviews = currentGame.user_games;
                 mainDiv.innerHTML = `
                 <div class="single-game">
                     <h1>Title: ${currentGame.name}</h1>
                     <h2>Genre: ${currentGame.genre}</h2>
                     <img src="${currentGame.image}" class="single-game-image" alt="${currentGame.name}">
+                </div>
+                <div class="single-game-add">    
                     <form id="add-to-my-list">
                         <input type="hidden" id="user_id" name="user_id" value="${currentUser.id}">
                         <input type="hidden" id="game_id" name="game_id" value="${currentGame.id}">
@@ -308,21 +322,32 @@ function mainDivEvent(){
                 </div>
                 <div class="single-game-badges">    
                     <h1>Badges: </h1>
-                    <ul class="badge-list">
+                    <div class="single-game-badge-list">
+                    </div>
+                </div>
+                <div class="single-game-reviews">
+                    <h1> Reviews/Ratings: </h1>
+                    <ul class="review-rating-list">
                     </ul>
                 </div>
                 `;
+                let badgeList = document.querySelector('div.single-game-badge-list');
                 currentGame.badges.forEach(badge => {
                     let div = document.createElement('div');
                     div.className = "single-badge-div";
-                    let li = document.createElement('li');
-                    li.className = "single-badge";
-                    li.textContent = badge.name;
                     let img = document.createElement('img');
                     img.src = badge.image;
-                    div.append(img, li);
-                    let ul = document.querySelector('ul.badge-list');
-                    ul.append(div);
+                    div.append(img);
+                    badgeList.append(div);
+                })
+                let reviewUl = document.querySelector('ul.review-rating-list');
+                reviews.forEach(review => {
+                    let li = document.createElement('li');
+                    li.textContent = review.review;
+                    let p = document.createElement('p');
+                    p.textContent = `Rating: ${review.rating}/5 - ${review.username}`;
+                    li.append(p)
+                    reviewUl.append(li);
                 })
                 addToList();
             })
@@ -449,12 +474,22 @@ function postNewUserGame(newUserGame){
     })
     .then(res => res.json())
     .then(data => {
+        let reviewUl = document.querySelector('ul.review-rating-list');
+        let reviewLi = document.createElement('li');
+        reviewLi.textContent = data.review;
+        let reviewP = document.createElement('p');
+        reviewP.textContent = `Rating: ${data.rating} - ${data.username}`;
+        reviewLi.append(reviewP);
+        reviewUl.append(reviewLi);
         fetch(`http://localhost:3000/games/${newUserGame.game_id}`)
         .then(res => res.json())
         .then(game => {
             let userGameList = document.querySelector('ul#user-game-list');
             let li = document.createElement('li');
             li.textContent = game.name;
+            let delBtn = document.createElement('button')
+            delBtn.textContent = "Delete";
+            li.append(delBtn);
             userGameList.append(li);
         })
     })
