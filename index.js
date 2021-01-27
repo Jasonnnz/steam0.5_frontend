@@ -5,6 +5,7 @@ let allUsers;
 let allGames;
 let currentUser;
 let currentGame;
+let currentUserGame;
 let currentUserGameList;
 let selectedUser;
 let selectedBadge;
@@ -242,6 +243,7 @@ function fetchLoggedInUser(loginObj){
         if (allUsers.find(user => user.email === loginObj.email && user.username === loginObj.username)){
             currentUser = allUsers.find(user => user.email === loginObj.email && user.username === loginObj.username);
             currentUserGameList = currentUser.games;
+            currentUserGame = currentUser.user_games;
             userInfo.innerHTML = `
             <div class="user-page-info">
                 <h1 id='name'>Welcome: ${currentUser.name}</h1><br>
@@ -275,21 +277,43 @@ function fetchLoggedInUser(loginObj){
             currentUserGameList.forEach(game => {
                 let li = document.createElement('li');
                 li.textContent = game.name;
-                li.dataset.id = game.id;
-                let delBtn = document.createElement('button')
+                let cGame = currentUserGame.find(uGame => uGame.game_id === game.id)
+                li.dataset.id = cGame.id;
+                let delBtn = document.createElement('button');
                 delBtn.textContent = "Delete";
                 li.append(delBtn);
                 userGameList.append(li);
                 delBtn.addEventListener('click', function(e){
                     let liElem = e.target.parentElement;
-                    console.log(liElem)
-                    //deleting a usergame 
+                    let liId = liElem.dataset.id;
+                    fetch(`http://localhost:3000/user_games/${liId}`,{
+                        method: "DELETE",
+                    });
+                    userGameList.removeChild(liElem);
                 })
             }
             )
+            statusEvent();
         } else {
             alert("Your email/username has not been found!");
         }
+    })
+}
+function statusEvent(){
+    let h4 = document.querySelector('h4#status');
+    h4.addEventListener('click', function(e){
+        currentUser.status = !currentUser.status;
+        fetch(`http://localhost:3000/users/${currentUser.id}`,{
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(currentUser)
+        })
+        .then(res => res.json())
+        .then(user => {
+            h4.textContent = `Status: ${userStatus(user.status)}`;
+        });
     })
 }
 function mainDivEvent(){
@@ -402,28 +426,48 @@ function mainDivEvent(){
             .then(res => res.json())
             .then(badge => {
                 selectedBadge = badge;
-                mainDiv.innerHTML = `
-                <div>
-                    <img src="${badge.image}">
-                    <h1>${badge.name}</h1>
-                    <h2></h2>
-                    <h3>${badge.description}</h3>
-                </div>
-                <div id="new-badge-form">
-                    <form id="add-new-badge-to-my-list">
-                        <input type="hidden" id="user_id" name="user_id" value="${currentUser.id}">
-                        <input type="hidden" id="badge_id" name="badge_id" value="${selectedBadge.id}">
-                        <input type="submit" value="Add Badge">
-                    </form>
-                </div>
-                `;
+                fetch(`http://localhost:3000/users/${currentUser.id}`)
+                .then(res => res.json())
+                .then(user => {
+                    currentUser = user;
+                })
+                let uGList = [];
+                currentUserGameList = currentUser.user_games;
+                currentUserGameList.forEach(userGame => uGList.push(userGame.game_id))
+                if (uGList.includes(badge.game_id)){
+                    mainDiv.innerHTML = `
+                    <div>
+                        <img src="${badge.image}">
+                        <h1>${badge.name}</h1>
+                        <h2></h2>
+                        <h3>${badge.description}</h3>
+                    </div>
+                    <div id="new-badge-form">
+                        <form id="add-new-badge-to-my-list">
+                            <input type="hidden" id="user_id" name="user_id" value="${currentUser.id}">
+                            <input type="hidden" id="badge_id" name="badge_id" value="${selectedBadge.id}">
+                            <input type="submit" value="Add Badge">
+                        </form>
+                    </div>
+                    `;
+                    addToBadgeList();
+                } else {
+                    mainDiv.innerHTML = `
+                    <div>
+                        <img src="${badge.image}">
+                        <h1>${badge.name}</h1>
+                        <h2></h2>
+                        <h3>${badge.description}</h3>
+                    </div>
+                    `;
+                }
                 let h2 = mainDiv.querySelector('h2');
                 fetch(`http://localhost:3000/games/${badge.game_id}`)
                 .then(res => res.json())
                 .then(game => {
                     h2.textContent = game.name;
                 })
-                addToBadgeList();
+                
             })
         }
     })
@@ -486,11 +530,20 @@ function postNewUserGame(newUserGame){
         .then(game => {
             let userGameList = document.querySelector('ul#user-game-list');
             let li = document.createElement('li');
+            li.dataset.id = data.id;
             li.textContent = game.name;
             let delBtn = document.createElement('button')
             delBtn.textContent = "Delete";
             li.append(delBtn);
             userGameList.append(li);
+            delBtn.addEventListener('click', function(e){
+                let liElem = e.target.parentElement;
+                let liId = liElem.dataset.id;
+                fetch(`http://localhost:3000/user_games/${liId}`,{
+                    method: "DELETE",
+                });
+                userGameList.removeChild(liElem);
+            })
         })
     })
 }
