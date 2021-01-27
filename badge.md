@@ -1,4 +1,5 @@
 apex:
+"./badgeimage/apex/apexr/ap1.jpg"
 1
 - Jumpmaster
 - Be the Jumpmaster 5 times
