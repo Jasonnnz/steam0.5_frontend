@@ -247,11 +247,11 @@ function fetchLoggedInUser(loginObj){
             userInfo.innerHTML = `
             <div class="user-page-info">
                 <div class="user-info-div">
-                    <h1 id='name'>Welcome: ${currentUser.name}</h1><br>
-                    <h2 id='email'>Email: ${currentUser.email}</h2><br>
-                    <h2 id='username'>Username: ${currentUser.username}</h2><br>
-                    <h3 id='age'>Age: ${currentUser.age}</h3><br>
-                    <h3 id='location'>Location: ${currentUser.location}</h3><br>
+                    <h1 id='name'>Welcome: ${currentUser.name}</h1>
+                    <h2 id='email'>Email: ${currentUser.email}</h2>
+                    <h2 id='username'>Username: ${currentUser.username}</h2>
+                    <h3 id='age'>Age: ${currentUser.age}</h3>
+                    <h3 id='location'>Location: ${currentUser.location}</h3>
                     <h4 id='status'>Status: ${userStatus(currentUser.status)}</h4>
                 </div>
                 <div class="user-friendship-info">
@@ -272,7 +272,6 @@ function fetchLoggedInUser(loginObj){
                     </ul>
                 </div>
             </div>
-            
             `;
             navUl.innerHTML = `
                 <li class='nav-selection' id='users'>Users</li>
@@ -303,7 +302,7 @@ function fetchLoggedInUser(loginObj){
             )
             statusEvent();
             let followingList = document.querySelector('ul.following')
-            currentUser.followers.forEach(follower => {
+            currentUser.followees.forEach(follower => {
                 let li = document.createElement('li');
                 li.textContent = follower.name;
                 followingList.append(li);
@@ -441,7 +440,7 @@ function mainDivEvent(){
                         li.textContent = badge.name;
                         selectedUserBadgeList.append(li);
                     })
-                    selectedUser.followers.forEach(follower => {
+                    selectedUser.followees.forEach(follower => {
                         let li = document.createElement('li');
                         li.textContent = follower.name;
                         selectedUserFollowingList.append(li);
@@ -496,7 +495,7 @@ function mainDivEvent(){
                         li.textContent = badge.name;
                         selectedUserBadgeList.append(li);
                     })
-                    selectedUser.followers.forEach(follower => {
+                    selectedUser.followees.forEach(follower => {
                         let li = document.createElement('li');
                         li.textContent = follower.name;
                         selectedUserFollowingList.append(li);
@@ -509,8 +508,21 @@ function mainDivEvent(){
                             follower_id: followerId,
                             followee_id: followeeId
                         }
-                        console.log(newFriendship)
-                        // post to DB then render on display pages to /friendships -> create action
+                        fetch('http://localhost:3000/friendships',{
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(newFriendship)
+                        })
+                        .then(res => res.json())
+                        .then(friendship => {
+                            console.log(friendship)
+                            let myFollowing = document.querySelector('ul.following')
+                            let li = document.createElement('li');
+                            li.textContent = selectedUser.name;
+                            myFollowing.append(li);
+                        })
                     })
                 }
             })

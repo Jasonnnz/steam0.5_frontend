@@ -47,10 +47,17 @@ nav li {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 .user-info{
+    display: grid;
     background-color: lightpink;
     padding: 10px;
     border: 15px solid black;
     border-radius: 20px;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    height: 100vh;
+    overflow: auto;
 }
 .signup-form{
     margin: auto;
@@ -58,7 +65,30 @@ nav li {
     text-align: center;
 }
 .user-page-info{
-    height: 50%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+.game-info-div{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+.user-info-div{
+    grid-area: 1 / 1 / 2 / 2;
+}
+.user-friendship-info{
+    grid-area: 2 / 1 / 3 / 2;
+}
+.user-game-list{
+    grid-area: 1 / 1 / 2 / 2;
+}
+.user-badge-list{
+    grid-area: 2 / 1 / 3 / 2;
 }
 .user-page-info > h1 {
     margin: 0;
