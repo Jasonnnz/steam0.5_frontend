@@ -401,7 +401,7 @@ function mainDivEvent(){
                 if (currentUser.id === selectedUser.id){
                     mainDiv.innerHTML = `
                     <div class="user-show-info">
-                        <div class"user-info-div">
+                        <div class"user-show-info-div">
                             <h1 id='name'>Name: ${selectedUser.name}</h1><br>
                             <h2 id='email'>Email: ${selectedUser.email}</h2><br>
                             <h2 id='username'>Username: ${selectedUser.username}</h2><br>
@@ -450,7 +450,7 @@ function mainDivEvent(){
                 } else {
                     mainDiv.innerHTML = `
                     <div class="user-show-info">
-                        <div class"user-info-div">
+                        <div class"user-show-info-div">
                             <h1 id='name'>Name: ${selectedUser.name}</h1><br>
                             <h2 id='email'>Email: ${selectedUser.email}</h2><br>
                             <h2 id='username'>Username: ${selectedUser.username}</h2><br>
@@ -545,29 +545,34 @@ function mainDivEvent(){
                 currentUserGameList.forEach(userGame => uGList.push(userGame.game_id))
                 if (uGList.includes(badge.game_id)){
                     mainDiv.innerHTML = `
-                    <div>
-                        <img src="${badge.image}">
-                        <h1>${badge.name}</h1>
-                        <h2></h2>
-                        <h3>${badge.description}</h3>
-                    </div>
-                    <div id="new-badge-form">
-                        <form id="add-new-badge-to-my-list">
-                            <input type="hidden" id="user_id" name="user_id" value="${currentUser.id}">
-                            <input type="hidden" id="badge_id" name="badge_id" value="${selectedBadge.id}">
-                            <input type="submit" value="Add Badge">
-                        </form>
+                    <div class="single-badge-div">
+                        <div class="single-badge-display">
+                            <img src="${badge.image}">
+                            <h1>${badge.name}</h1>
+                            <h2></h2>
+                            <h3>${badge.description}</h3>
+                        </div>
+                        <div id="new-badge-form">
+                            <form id="add-new-badge-to-my-list">
+                                <input type="hidden" id="user_id" name="user_id" value="${currentUser.id}">
+                                <input type="hidden" id="badge_id" name="badge_id" value="${selectedBadge.id}">
+                                <input type="submit" value="Add Badge">
+                            </form>
+                        </div>
                     </div>
                     `;
                     addToBadgeList();
                 } else {
                     mainDiv.innerHTML = `
-                    <div>
-                        <img src="${badge.image}">
-                        <h1>${badge.name}</h1>
-                        <h2></h2>
-                        <h3>${badge.description}</h3>
+                    <div class="single-badge-div">
+                        <div class="single-badge-display">
+                            <img src="${badge.image}">
+                            <h1>${badge.name}</h1>
+                            <h2></h2>
+                            <h3>${badge.description}</h3>
+                        </div>
                     </div>
+
                     `;
                 }
                 let h2 = mainDiv.querySelector('h2');

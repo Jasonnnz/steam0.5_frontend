@@ -1,32 +1,39 @@
 body {
     margin: 0;
+    font-family: 'Baloo Bhai 2', sans-serif;
+    font-size: 20px;
+    color: rgba(0, 251, 255, 0.858);
     /* background-color: black; */
 }
 
 nav {
-    background-color: white;
+    font-family: 'Bungee', sans-serif;
+    background-color: black;
     width: auto
 }
 
-img.logo {
+/* img.logo {
     /* float: left; */
-    width: 175px;
+    /* width: 175px;
     height: 75px;
-}
-
-nav ul {
+} */
+/* 
+nav ul.nav-ul {
     float: right;
     margin: 0;
     list-style-type: none;
     padding-right: 20px;
-}
-nav li {
+} */
+nav ul li {
+    float: right;
+    margin: 0;
     font-size: 20px;
     display: inline-block;
     text-align: center;
     background-color: rgba(170, 209, 236, 0.575);
     border: 2px solid rgb(170, 209, 236, 0.575);
     border-radius: 5px;
+    list-style-type: none;
     padding: 20px;
 }
 .container {
@@ -98,13 +105,13 @@ nav li {
     grid-column-gap: 0px;
     grid-row-gap: 0px;
 }
-.game-info-div{
+/* .game-info-div{
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-}
+} */
 .user-info-div{
     grid-area: 1 / 1 / 2 / 2;
 }
@@ -132,4 +139,50 @@ nav li {
 .image-div > img{
     height: 100%;
     width: 100%;
+}
+.single-badge-div{
+    display: flexbox;
+    justify-content: center;
+    text-align: center;
+}
+.single-badge-display {
+    align-items: center;
+    padding-top: 20%;
+}
+.user-show-info{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+.user-show-info-div{
+    grid-area: 1 / 1 / 2 / 2;
+}
+.user-following{
+    grid-area: 2 / 1 / 3 / 2;
+}
+.user-game-list{
+    grid-area: 1 / 2 / 2 / 3;
+}
+.user-badge-list{
+    grid-area: 2 / 2 / 3 / 3;
+}
+h1#name{
+    margin: 0px;
+}
+h2#email{
+    margin: 0px;
+}
+h2#username{
+    margin: 0px;
+}
+h3#age{
+    margin: 0px;
+}
+h3#location{
+    margin: 0px;
+}
+h4#status{
+    margin: 0px;
 }
