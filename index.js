@@ -278,7 +278,7 @@ function fetchLoggedInUser(loginObj){
                 <li class='nav-selection' id='games'>Games</li>
                 <li class='nav-selection' id='badges'>Badges</li>
                 <li class='nav-selection' id='welcome'>Welcome: ${currentUser.name}</li>
-                <img src='${currentUser.image}' alt="${currentUser.name}'s picture" id='image' width=50 height=50>
+                <img src='${currentUser.image}' alt="${currentUser.name}'s picture" id='image' width=75 height=75>
             `;
             let userGameList = document.querySelector('ul#user-game-list');
             currentUserGameList.forEach(game => {

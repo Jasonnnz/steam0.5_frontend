@@ -3,6 +3,7 @@ body {
     font-family: 'Baloo Bhai 2', sans-serif;
     font-size: 20px;
     color: rgba(0, 251, 255, 0.858);
+    background-color: black;
     /* background-color: black; */
 }
 
@@ -39,6 +40,7 @@ nav ul li {
     padding: 20px;
     margin-top: 25px;
 }
+
 .app-name-div h4{
     /* display: inline-block; */
     text-align: center;
@@ -53,7 +55,7 @@ nav ul li {
 .nav-bar-div{ 
     display: inline-block;
     float: right;
-
+    background: black;
 }
 .container {
     background-color: black;
@@ -63,14 +65,15 @@ nav ul li {
     grid-template-columns: 3fr 1fr;
 }
 .main-display{
-    background-color: lightpink;
+    background-color: black;
     padding: 10px;
-    border: 15px solid black;
+    border: 10px solid lightpink;
     border-radius: 20px;
     overflow: auto;
     display: grid;
     grid-gap: 20px;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    padding: 0px 10px;
 }
 .single-game-div{
     display: grid;
@@ -101,16 +104,17 @@ nav ul li {
 }
 .user-info{
     display: grid;
-    background-color: lightpink;
+    background-color: black;
     padding: 10px;
-    border: 15px solid black;
+    border: 10px solid lightpink;
     border-radius: 20px;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     height: 100vh;
-    overflow: auto;
+    padding: 0px 10px;
+    /* overflow: auto; */
 }
 .signup-form{
     margin: auto;
@@ -124,13 +128,13 @@ nav ul li {
     grid-column-gap: 0px;
     grid-row-gap: 0px;
 }
-.game-info-div{
+/* .game-info-div{
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-}
+} */
 .user-info-div{
     grid-area: 1 / 1 / 2 / 2;
 }
@@ -139,9 +143,11 @@ nav ul li {
 }
 .user-game-list{
     grid-area: 1 / 1 / 2 / 2;
+    overflow: auto; 
 }
 .user-badge-list{
     grid-area: 2 / 1 / 3 / 2;
+    overflow: auto; 
 }
 .user-page-info > h1 {
     margin: 0;
