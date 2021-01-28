@@ -9,7 +9,8 @@ body {
 nav {
     font-family: 'Bungee', sans-serif;
     background-color: black;
-    width: auto
+    width: 100vw;
+    display: inline-block;
 }
 
 /* img.logo {
@@ -17,15 +18,16 @@ nav {
     /* width: 175px;
     height: 75px;
 } */
-/* 
+
 nav ul.nav-ul {
     float: right;
     margin: 0;
     list-style-type: none;
     padding-right: 20px;
-} */
+    
+}
 nav ul li {
-    float: right;
+    float: float;
     margin: 0;
     font-size: 20px;
     display: inline-block;
@@ -35,6 +37,23 @@ nav ul li {
     border-radius: 5px;
     list-style-type: none;
     padding: 20px;
+    margin-top: 25px;
+}
+.app-name-div h4{
+    /* display: inline-block; */
+    text-align: center;
+    float: left;
+    margin-left: 25px;
+    background-color: rgba(170, 209, 236, 0.575);
+    border: 2px solid rgb(170, 209, 236, 0.575);
+    border-radius: 5px;
+    padding: 20px;
+    /* padding: 14px 16px; */
+}
+.nav-bar-div{ 
+    display: inline-block;
+    float: right;
+
 }
 .container {
     background-color: black;
@@ -105,13 +124,13 @@ nav ul li {
     grid-column-gap: 0px;
     grid-row-gap: 0px;
 }
-/* .game-info-div{
+.game-info-div{
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-} */
+}
 .user-info-div{
     grid-area: 1 / 1 / 2 / 2;
 }
