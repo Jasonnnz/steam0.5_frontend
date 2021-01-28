@@ -339,33 +339,35 @@ function mainDivEvent(){
                 currentGame = game;
                 let reviews = currentGame.user_games;
                 mainDiv.innerHTML = `
-                <div class="single-game">
-                    <h1>Title: ${currentGame.name}</h1>
-                    <h2>Genre: ${currentGame.genre}</h2>
-                    <img src="${currentGame.image}" class="single-game-image" alt="${currentGame.name}">
-                </div>
-                <div class="single-game-add">    
-                    <form id="add-to-my-list">
-                        <input type="hidden" id="user_id" name="user_id" value="${currentUser.id}">
-                        <input type="hidden" id="game_id" name="game_id" value="${currentGame.id}">
-                        <label for="username"> Username: </label>
-                        <input type="text" id="username" name="username" placeholder="Enter Username for game"><br>
-                        <label for="rating"> Rating: </label>
-                        <input type="number" id="rating" name="rating" placeholder="Enter Rating 0-5"><br>
-                        <label for="review"> Review: </label>
-                        <input type="text" id="review" name="review" placeholder="Enter Review"><br>
-                        <input type="submit" value="Add To My List">
-                    </form>
-                </div>
-                <div class="single-game-badges">    
-                    <h1>Badges: </h1>
-                    <div class="single-game-badge-list">
+                <div class="single-game-div">
+                    <div class="single-game">
+                        <h1>Title: ${currentGame.name}</h1>
+                        <h2>Genre: ${currentGame.genre}</h2>
+                        <img src="${currentGame.image}" class="single-game-image" alt="${currentGame.name}">
                     </div>
-                </div>
-                <div class="single-game-reviews">
-                    <h1> Reviews/Ratings: </h1>
-                    <ul class="review-rating-list">
-                    </ul>
+                    <div class="single-game-add">    
+                        <form id="add-to-my-list">
+                            <input type="hidden" id="user_id" name="user_id" value="${currentUser.id}">
+                            <input type="hidden" id="game_id" name="game_id" value="${currentGame.id}">
+                            <label for="username"> Username: </label>
+                            <input type="text" id="username" name="username" placeholder="Enter Username for game"><br>
+                            <label for="rating"> Rating: </label>
+                            <input type="number" id="rating" name="rating" placeholder="Enter Rating 0-5"><br>
+                            <label for="review"> Review: </label>
+                            <input type="text" id="review" name="review" placeholder="Enter Review"><br>
+                            <input type="submit" value="Add To My List">
+                        </form>
+                    </div>
+                    <div class="single-game-badges">    
+                        <h1>Badges: </h1>
+                        <div class="single-game-badge-list">
+                        </div>
+                    </div>
+                    <div class="single-game-reviews">
+                        <h1> Reviews/Ratings: </h1>
+                        <ul class="review-rating-list">
+                        </ul>
+                    </div>
                 </div>
                 `;
                 let badgeList = document.querySelector('div.single-game-badge-list');
