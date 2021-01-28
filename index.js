@@ -246,15 +246,21 @@ function fetchLoggedInUser(loginObj){
             currentUserGame = currentUser.user_games;
             userInfo.innerHTML = `
             <div class="user-page-info">
-                <h1 id='name'>Welcome: ${currentUser.name}</h1><br>
-                <h2 id='email'>Email: ${currentUser.email}</h2><br>
-                <h2 id='username'>Username: ${currentUser.username}</h2><br>
-                <h3 id='age'>Age: ${currentUser.age}</h3><br>
-                <h3 id='location'>Location: ${currentUser.location}</h3><br>
-                <h4 id='status'>Status: ${userStatus(currentUser.status)}</h4>
-                <div class="user-profile-pic">
-                    <img src='${currentUser.image}' alt="${currentUser.name}'s picture" id='image' width=200 height=200>
+                <div class="user-info-div">
+                    <h1 id='name'>Welcome: ${currentUser.name}</h1><br>
+                    <h2 id='email'>Email: ${currentUser.email}</h2><br>
+                    <h2 id='username'>Username: ${currentUser.username}</h2><br>
+                    <h3 id='age'>Age: ${currentUser.age}</h3><br>
+                    <h3 id='location'>Location: ${currentUser.location}</h3><br>
+                    <h4 id='status'>Status: ${userStatus(currentUser.status)}</h4>
                 </div>
+                <div class="user-friendship-info">
+                    <h1>Following:</h1>
+                    <ul class="following">
+                    </ul>
+                </div>
+            </div>
+            <div class="game-info-div">
                 <div class="user-game-list">
                     <h1>Game List: </h1>
                     <ul id= "user-game-list">
@@ -266,12 +272,14 @@ function fetchLoggedInUser(loginObj){
                     </ul>
                 </div>
             </div>
+            
             `;
             navUl.innerHTML = `
                 <li class='nav-selection' id='users'>Users</li>
                 <li class='nav-selection' id='games'>Games</li>
                 <li class='nav-selection' id='badges'>Badges</li>
                 <li class='nav-selection' id='welcome'>Welcome: ${currentUser.name}</li>
+                <img src='${currentUser.image}' alt="${currentUser.name}'s picture" id='image' width=50 height=50>
             `;
             let userGameList = document.querySelector('ul#user-game-list');
             currentUserGameList.forEach(game => {
@@ -294,6 +302,12 @@ function fetchLoggedInUser(loginObj){
             }
             )
             statusEvent();
+            let followingList = document.querySelector('ul.following')
+            currentUser.followers.forEach(follower => {
+                let li = document.createElement('li');
+                li.textContent = follower.name;
+                followingList.append(li);
+            })
         } else {
             alert("Your email/username has not been found!");
         }
@@ -383,41 +397,122 @@ function mainDivEvent(){
             .then(res => res.json())
             .then(user => {
                 selectedUser = user;
-                mainDiv.innerHTML = `
-                <div class="user-show-info">
-                    <h1 id='name'>Name: ${selectedUser.name}</h1><br>
-                    <h2 id='email'>Email: ${selectedUser.email}</h2><br>
-                    <h2 id='username'>Username: ${selectedUser.username}</h2><br>
-                    <h3 id='age'>Age: ${selectedUser.age}</h3><br>
-                    <h3 id='location'>Location: ${selectedUser.location}</h3><br>
-                    <h4 id='status'>Status: ${userStatus(selectedUser.status)}</h4>
-                    <div class="user-profile-pic">
-                        <img src='${selectedUser.image}' alt="${selectedUser.name}'s picture" id='image' width=200 height=200>
+                if (currentUser.id === selectedUser.id){
+                    mainDiv.innerHTML = `
+                    <div class="user-show-info">
+                        <div class"user-info-div">
+                            <h1 id='name'>Name: ${selectedUser.name}</h1><br>
+                            <h2 id='email'>Email: ${selectedUser.email}</h2><br>
+                            <h2 id='username'>Username: ${selectedUser.username}</h2><br>
+                            <h3 id='age'>Age: ${selectedUser.age}</h3><br>
+                            <h3 id='location'>Location: ${selectedUser.location}</h3><br>
+                            <h4 id='status'>Status: ${userStatus(selectedUser.status)}</h4>
+                            <div class="user-profile-pic">
+                                <img src='${selectedUser.image}' alt="${selectedUser.name}'s picture" id='image' width=200 height=200>
+                            </div>
+                        </div>
+                        <div class="user-following">
+                            <h1>Following:</h1>
+                            <ul class="single-user-following">
+                            </ul>
+                        </div>
+                        <div class="user-game-list">
+                            <h1>Game List: </h1>
+                            <ul id= "user-game-list">
+                            </ul>
+                        </div>
+                        <div class="user-badge-list">
+                            <h1>Badge List: </h1>
+                            <ul id= "user-badge-list">
+                            </ul>
+                        </div>
                     </div>
-                    <div class="user-game-list">
-                        <h1>Game List: </h1>
-                        <ul id= "user-game-list">
-                        </ul>
+                    `;
+                    let selectedUserGameList = document.querySelector('ul#user-game-list');
+                    let selectedUserBadgeList = document.querySelector('ul#user-badge-list');
+                    let selectedUserFollowingList = document.querySelector('ul.single-user-following');
+                    selectedUser.games.forEach(game => {
+                        let li = document.createElement('li');
+                        li.textContent = game.name;
+                        selectedUserGameList.append(li);
+                    })
+                    selectedUser.badges.forEach(badge => {
+                        let li = document.createElement('li');
+                        li.textContent = badge.name;
+                        selectedUserBadgeList.append(li);
+                    })
+                    selectedUser.followers.forEach(follower => {
+                        let li = document.createElement('li');
+                        li.textContent = follower.name;
+                        selectedUserFollowingList.append(li);
+                    })
+                } else {
+                    mainDiv.innerHTML = `
+                    <div class="user-show-info">
+                        <div class"user-info-div">
+                            <h1 id='name'>Name: ${selectedUser.name}</h1><br>
+                            <h2 id='email'>Email: ${selectedUser.email}</h2><br>
+                            <h2 id='username'>Username: ${selectedUser.username}</h2><br>
+                            <h3 id='age'>Age: ${selectedUser.age}</h3><br>
+                            <h3 id='location'>Location: ${selectedUser.location}</h3><br>
+                            <h4 id='status'>Status: ${userStatus(selectedUser.status)}</h4>
+                            <div class="user-profile-pic">
+                                <img src='${selectedUser.image}' alt="${selectedUser.name}'s picture" id='image' width=200 height=200>
+                            </div>
+                            <form id="follow-selected-user">
+                                <input type="hidden" id="follower_id" name="follower_id" value="${currentUser.id}">
+                                <input type="hidden" id="followee_id" name="followee_id" value="${selectedUser.id}">
+                                <input type="submit" value="Follow">
+                            </form>
+                        </div>
+                        <div class="user-following">
+                            <h1>Following:</h1>
+                            <ul class="single-user-following">
+                            </ul>
+                        </div>
+                        <div class="user-game-list">
+                            <h1>Game List: </h1>
+                            <ul id= "user-game-list">
+                            </ul>
+                        </div>
+                        <div class="user-badge-list">
+                            <h1>Badge List: </h1>
+                            <ul id= "user-badge-list">
+                            </ul>
+                        </div>
                     </div>
-                    <div class="user-badge-list">
-                        <h1>Badge List: </h1>
-                        <ul id= "user-badge-list">
-                        </ul>
-                    </div>
-                </div>
-                `;
-                let selectedUserGameList = document.querySelector('ul#user-game-list');
-                let selectedUserBadgeList = document.querySelector('ul#user-badge-list');
-                selectedUser.games.forEach(game => {
-                    let li = document.createElement('li');
-                    li.textContent = game.name;
-                    selectedUserGameList.append(li);
-                })
-                selectedUser.badges.forEach(badge => {
-                    let li = document.createElement('li');
-                    li.textContent = badge.name;
-                    selectedUserBadgeList.append(li);
-                })
+                    `;
+                    let selectedUserGameList = document.querySelector('ul#user-game-list');
+                    let selectedUserBadgeList = document.querySelector('ul#user-badge-list');
+                    let selectedUserFollowingList = document.querySelector('ul.single-user-following');
+                    let followBtn = document.querySelector('form#follow-selected-user');
+                    selectedUser.games.forEach(game => {
+                        let li = document.createElement('li');
+                        li.textContent = game.name;
+                        selectedUserGameList.append(li);
+                    })
+                    selectedUser.badges.forEach(badge => {
+                        let li = document.createElement('li');
+                        li.textContent = badge.name;
+                        selectedUserBadgeList.append(li);
+                    })
+                    selectedUser.followers.forEach(follower => {
+                        let li = document.createElement('li');
+                        li.textContent = follower.name;
+                        selectedUserFollowingList.append(li);
+                    })
+                    followBtn.addEventListener('submit', function(e){
+                        e.preventDefault();
+                        let followerId = e.target.follower_id.value;
+                        let followeeId = e.target.followee_id.value;
+                        let newFriendship = {
+                            follower_id: followerId,
+                            followee_id: followeeId
+                        }
+                        console.log(newFriendship)
+                        // post to DB then render on display pages to /friendships -> create action
+                    })
+                }
             })
         } else if (e.target.matches('img.badge-image')){
             let selectedBadgeId = parseInt(e.target.dataset.id);
