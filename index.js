@@ -231,6 +231,7 @@ function loginEvent(){
             <input type="submit" value="Create New Game!">
         </form>
        `;
+       //needs event listener
         mainDiv.append(formDiv);
         mainDivEvent();
     })
