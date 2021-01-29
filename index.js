@@ -192,11 +192,11 @@ function addNewUserToDB(newUser){
             </div>
         `;
         navUl.innerHTML = `
-                <li class='nav-selection' id='users'>Users</li>
-                <li class='nav-selection' id='games'>Games</li>
-                <li class='nav-selection' id='badges'>Badges</li>
-                <li class='nav-selection' id='welcome'>Welcome: ${currentUser.name}</li>
-            `;
+            <li class='nav-selection' id='welcome'>Welcome: ${currentUser.name}</li>
+            <li class='nav-selection' id='badges'>Badges</li>
+            <li class='nav-selection' id='games'>Games</li>
+            <li class='nav-selection' id='users'>Users</li>
+        `;
     })
 }
 function userStatus(status){
@@ -274,11 +274,11 @@ function fetchLoggedInUser(loginObj){
             </div>
             `;
             navUl.innerHTML = `
-                <li class='nav-selection' id='users'>Users</li>
-                <li class='nav-selection' id='games'>Games</li>
-                <li class='nav-selection' id='badges'>Badges</li>
-                <li class='nav-selection' id='welcome'>Welcome: ${currentUser.name}</li>
                 <img src='${currentUser.image}' alt="${currentUser.name}'s picture" id='image' width=75 height=75>
+                <li class='nav-selection' id='welcome'>Welcome: ${currentUser.name}</li>
+                <li class='nav-selection' id='badges'>Badges</li>
+                <li class='nav-selection' id='games'>Games</li>
+                <li class='nav-selection' id='users'>Users</li>
             `;
             let userGameList = document.querySelector('ul#user-game-list');
             currentUserGameList.forEach(game => {
@@ -347,6 +347,7 @@ function mainDivEvent(){
                     </div>
                     <div class="single-game-add">    
                         <form id="add-to-my-list">
+                            <h4>Add this game to my list:</h4>
                             <input type="hidden" id="user_id" name="user_id" value="${currentUser.id}">
                             <input type="hidden" id="game_id" name="game_id" value="${currentGame.id}">
                             <label for="username"> Username: </label>
