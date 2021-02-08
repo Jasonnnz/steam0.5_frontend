@@ -170,15 +170,21 @@ function addNewUserToDB(newUser){
         currentUser = user;
         userInfo.innerHTML = `
             <div class="user-page-info">
-                <h1 id='name'>Welcome: ${currentUser.name}</h1><br>
-                <h2 id='email'>Email: ${currentUser.email}</h2><br>
-                <h2 id='username'>Username: ${currentUser.username}</h2><br>
-                <h3 id='age'>Age: ${currentUser.age}</h3><br>
-                <h3 id='location'>Location: ${currentUser.location}</h3><br>
-                <h4 id='status'>Status: ${userStatus(currentUser.status)}</h4>
-                <div class="user-profile-pic">
-                    <img src='${currentUser.image}' alt='${currentUser.name}'s picture' id='image' width=200 height=200>
+                <div class="user-info-div">
+                    <h1 id='name'>Welcome: ${currentUser.name}</h1><br>
+                    <h2 id='email'>Email: ${currentUser.email}</h2><br>
+                    <h2 id='username'>Username: ${currentUser.username}</h2><br>
+                    <h3 id='age'>Age: ${currentUser.age}</h3><br>
+                    <h3 id='location'>Location: ${currentUser.location}</h3><br>
+                    <h4 id='status'>Status: ${userStatus(currentUser.status)}</h4>
                 </div>
+                <div class="user-friendship-info">
+                    <h1>Following:</h1>
+                    <ul class="following">
+                    </ul>
+                </div>
+            </div>
+            <div class="game-info-div">
                 <div class="user-game-list">
                     <h1>Game List: </h1>
                     <ul id= "user-game-list">
