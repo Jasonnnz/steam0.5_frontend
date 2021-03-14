@@ -13,7 +13,7 @@ let selectedBadge;
 loginEvent();
 navUlEvent();
 fetchAllGames();
-
+// handleLogOut();
 function fetchAllGames(){
     fetch('http://localhost:3000/games')
     .then(res => res.json())
@@ -281,12 +281,16 @@ function fetchLoggedInUser(loginObj){
             </div>
             `;
             navUl.innerHTML = `
-                <img src='${currentUser.image}' alt="${currentUser.name}'s picture" id='image' width=75 height=75>
+                <img src='${currentUser.image}' alt="${currentUser.name}'s picture" id='profile-image' width=75 height=75>
                 <li class='nav-selection' id='welcome'>Welcome: ${currentUser.name}</li>
                 <li class='nav-selection' id='badges'>Badges</li>
                 <li class='nav-selection' id='games'>Games</li>
                 <li class='nav-selection' id='users'>Users</li>
             `;
+            let profileImage = document.querySelector('img#profile-image')
+            profileImage.addEventListener('click', function(e){
+                location.reload();
+            })
             let userGameList = document.querySelector('ul#user-game-list');
             currentUserGameList.forEach(game => {
                 let li = document.createElement('li');
@@ -723,3 +727,5 @@ function loadAllBadgesToMainDiv(){
         })
     })
 }
+
+
