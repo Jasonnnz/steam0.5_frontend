@@ -218,7 +218,7 @@ nav ul li {
 
 .user-game-list li{
     list-style-type: none;
-    /* text-align: center; */
+    text-align: center;
 }
 
 .user-game-list button{ /* delete button on line index.js 651 */
@@ -281,9 +281,9 @@ nav ul li {
     grid-area: 2 / 1 / 3 / 2;
 }
 
-#user-game-list li{
+/* #user-game-list li{
     text-align: left;
-}
+} */
 
 div.user-friendship-info li{
     list-style-type: none;
