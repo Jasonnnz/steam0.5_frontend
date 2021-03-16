@@ -270,7 +270,7 @@ function fetchLoggedInUser(loginObj){
             <div class="game-info-div">
                 <div class="user-game-list">
                     <h1>Game List: </h1>
-                    <ul id= "user-game-list">
+                    <ul id= "user-game-list-main">
                     </ul>
                 </div>
                 <div class="user-badge-list">
@@ -291,7 +291,7 @@ function fetchLoggedInUser(loginObj){
             profileImage.addEventListener('click', function(e){
                 location.reload();
             })
-            let userGameList = document.querySelector('ul#user-game-list');
+            let userGameList = document.querySelector('ul#user-game-list-main');
             currentUserGameList.forEach(game => {
                 let li = document.createElement('li');
                 li.textContent = game.name;
